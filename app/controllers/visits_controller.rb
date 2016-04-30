@@ -1,5 +1,6 @@
 class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :edit, :update, :destroy]
+  before_action :set_owner, only: :create
 
   # GET /visits
   # GET /visits.json
@@ -24,11 +25,11 @@ class VisitsController < ApplicationController
   # POST /visits
   # POST /visits.json
   def create
-    @visit = Visit.new(visit_params)
+    @visit = Visit.new(owner: @owner)
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to @visit, notice: 'Visit was successfully created.' }
+        format.html { redirect_to '/', notice: "Visit was successfully created for #{@owner}." }
         format.json { render :show, status: :created, location: @visit }
       else
         format.html { render :new }
@@ -67,8 +68,12 @@ class VisitsController < ApplicationController
       @visit = Visit.find(params[:id])
     end
 
+    def set_owner
+      @owner = Owner.find_by_pass_id(visit_params[:owner_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_params
-      params.require(:visit).permit(:owner_id, :start_at, :end_at)
+      params.require(:visit).permit(:owner_id)
     end
 end

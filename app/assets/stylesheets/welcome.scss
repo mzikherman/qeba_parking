@@ -1,0 +1,35 @@
+.green-button 
+  a {
+    display: inline-block;
+    font-size:18px;
+    background-color:green;
+    color:white;
+    font-weight:bold;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-left:25px;
+    padding-right:25px;
+    text-transform:uppercase;
+    text-decoration:none;
+    height:auto;
+    width:auto;
+    text-align:center;
+  }
+
+.red-button
+  a {
+    display: inline-block;
+    font-size:18px;
+    background-color:red;
+    color:white;
+    font-weight:bold;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-left:25px;
+    padding-right:25px;
+    text-transform:uppercase;
+    text-decoration:none;
+    height:auto;
+    width:auto;
+    text-align:center;
+  }

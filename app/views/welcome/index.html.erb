@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+There is a total of <%= @occupied_spots %> spots taken so far.
+
+<br>
+<br>
+
+<div class='green-button'>
+  <a href=<%= new_visit_path %>>
+    Check-in
+  </a>
+</div>
+
+<br>
+<br>
+
+<div class='red-button'>
+  <a href='/visit/new'>
+    Check-out
+  </a>
+</div>
