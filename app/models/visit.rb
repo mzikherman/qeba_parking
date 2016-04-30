@@ -9,11 +9,11 @@ class Visit < ActiveRecord::Base
   validate :validate_overlapping_visits
 
   def set_start_at
-    self.start_at = Time.now
+    self.start_at = Time.now if self.start_at.blank?
   end
 
   def validate_overlapping_visits
-    existing_visits = Visit.occupied.where(owner: owner)
+    existing_visits = Visit.occupied.where(owner: owner).where("id != ?", self.id)
     current_time = Time.now
     if [0, 6].include? current_time.wday
       errors.add(:base, 'This pass is already in use') if existing_visits.any?

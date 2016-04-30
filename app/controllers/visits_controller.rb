@@ -1,6 +1,6 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:show, :edit, :update, :destroy]
-  before_action :set_owner, only: :create
+  before_action :set_visit, only: [:show, :destroy]
+  before_action :set_owner, only: [:create, :update]
 
   # GET /visits
   # GET /visits.json
@@ -41,13 +41,24 @@ class VisitsController < ApplicationController
   # PATCH/PUT /visits/1
   # PATCH/PUT /visits/1.json
   def update
-    respond_to do |format|
-      if @visit.update(visit_params)
-        format.html { redirect_to @visit, notice: 'Visit was successfully updated.' }
-        format.json { render :show, status: :ok, location: @visit }
+    if @owner.nil?
+      respond_to do |format|
+        format.js { render json: { notice: 'Pass id not found' } }
+      end
+
+    else
+
+      @visit = @owner.visits.occupied.first
+
+      if @visit.nil?
+        respond_to do |format|
+          format.js { render json: { notice: 'No corresponding visit to check-out found' } }
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @visit.errors, status: :unprocessable_entity }
+        @visit.update_attributes!(end_at: Time.now)
+        respond_to do |format|
+          format.js { render json: { notice: "#{@owner} successfully checked-out.", checked_out: true } }
+        end
       end
     end
   end
@@ -63,7 +74,6 @@ class VisitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_visit
       @visit = Visit.find(params[:id])
     end

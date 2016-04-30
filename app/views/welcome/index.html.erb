@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-There is a total of <%= @occupied_spots %> spots taken so far.
+There is a total of <span id='occupied-spots'><%= @occupied_spots %></span> spots taken so far.
 
 <br>
 <br>
@@ -14,8 +14,8 @@ There is a total of <%= @occupied_spots %> spots taken so far.
 <br>
 <br>
 
-<div class='red-button'>
-  <a href='/visit/new'>
+<div id='check-out' class='red-button'>
+  <a href='#'>
     Check-out
   </a>
 </div>
