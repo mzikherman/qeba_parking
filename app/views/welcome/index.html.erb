@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= @notice || notice %></p>
 
-There is a total of <span id='occupied-spots'><%= @occupied_spots %></span> spots taken so far.
+There is a total of <span id='occupied-spots'><%= @occupied_spots %></span> <%= 'spot'.pluralize(@occupied_spots) %> taken so far.
 <br>
-There are <span id='member-total'><%= Owner.count %></span> members in the system.
+There are <span id='member-total'><%= @total_members %></span> <%= 'member'.pluralize(@total_members) %> in the system.
 <br>
 <br>
 

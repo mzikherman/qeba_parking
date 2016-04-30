@@ -2,17 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
+  # Flash stripper
+  if window.location.search.match /flash/
+    window.history.pushState('', '', window.location.origin);
+
+  # Checkout button
   if $('#check-out')
-    $('#check-out a').on 'click', ->
+    $('#check-out a').on 'click', (e) ->
+      e.preventDefault()
       passId = window.prompt('Enter Pass Id')
       $.ajax
         type: 'PUT'
         url: "/visits/#{passId}"
         data: visit: owner_id: passId
         dataType: 'json'
-        success: (e,f,g) =>
-          if e.notice
-            $('#notice').text(e.notice)
-          if e.checked_out
-            val = parseInt($('#occupied-spots').text())
-            $('#occupied-spots').text(val - 1)
+        success: (resp) =>
+          if resp.checked_out
+            currentLocation = window.location.href
+            window.location = "#{currentLocation}?flash=#{resp.notice}"
+            return
+          if resp.notice
+            $('#notice').text(resp.notice)
