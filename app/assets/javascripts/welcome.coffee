@@ -11,15 +11,16 @@ $ ->
     $('#check-out a').on 'click', (e) ->
       e.preventDefault()
       passId = window.prompt('Enter Pass Id')
-      $.ajax
-        type: 'PUT'
-        url: "/visits/#{passId}"
-        data: visit: owner_id: passId
-        dataType: 'json'
-        success: (resp) =>
-          if resp.checked_out
-            currentLocation = window.location.href
-            window.location = "#{currentLocation}?flash=#{resp.notice}"
-            return
-          if resp.notice
-            $('#notice').text(resp.notice)
+      if passId
+        $.ajax
+          type: 'PUT'
+          url: "/visits/#{passId}"
+          data: visit: owner_id: passId
+          dataType: 'json'
+          success: (resp) =>
+            if resp.checked_out
+              currentLocation = window.location.href
+              window.location = "#{currentLocation}?flash=#{resp.notice}"
+              return
+            if resp.notice
+              $('#notice').text(resp.notice)

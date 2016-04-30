@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :owner_id, 'Enter Pass Number' %><br>
-    <%= f.text_field :owner_id %>
+    <%= f.text_field :owner_id, type: 'text', pattern: '[0-9]*' %>
   </div>
   <div class="actions">
     <%= f.submit %>
