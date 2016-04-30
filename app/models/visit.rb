@@ -13,7 +13,8 @@ class Visit < ActiveRecord::Base
   end
 
   def validate_overlapping_visits
-    existing_visits = Visit.occupied.where(owner: owner).where("id != ?", self.id)
+    existing_visits = Visit.occupied.where(owner: owner)
+    existing_visits = existing_visits.where("id != ?", self.id) if self.persisted?
     current_time = Time.now
     if [0, 6].include? current_time.wday
       errors.add(:base, 'This pass is already in use') if existing_visits.any?
