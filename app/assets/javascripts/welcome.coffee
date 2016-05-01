@@ -16,6 +16,7 @@ $ ->
 
   onCheckInSubmit = (e) ->
     e.preventDefault()
+    window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
     passId = $('#check-in-pass-id').val()
     if passId
       $.ajax
