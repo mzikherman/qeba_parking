@@ -1,22 +1,55 @@
 <p id="notice"><%= @notice || notice %></p>
 
-There is a total of <span id='occupied-spots'><%= @occupied_spots %></span> <%= 'spot'.pluralize(@occupied_spots) %> taken so far.
-<br>
-There are <span id='member-total'><%= @total_members %></span> <%= 'member'.pluralize(@total_members) %> in the system.
+There is a total of <strong><span id='occupied-spots'><%= @occupied_spots %></span></strong> <%= 'spot'.pluralize(@occupied_spots) %> taken so far.
+
 <br>
 <br>
 
-<div class='green-button'>
-  <a href=<%= new_visit_path %>>
+<p>
+  Today's date: <strong><%= @date_string %></strong>
+  <br>
+  <br>
+  Weekend rule in effect: <strong><%= is_weekend? ? 'Yes' : 'No' %></strong>
+</p>
+
+<div class='button-container'>
+  <a id='check-in-button' class='circular-button green left' href=<%= new_visit_path %>>
     Check-in
   </a>
+
+  <a id='check-out-button' class='circular-button red right' href='#'>
+    Check-out
+  </a> 
 </div>
 
-<br>
-<br>
+<div id='check-in-modal' class="modal">
+  <div class="modal-content">
+    <span class="close">x</span>
+    <h3>Enter Pass Number</h3>
+    <br>
+    <input id='check-in-pass-id' type='text' pattern='[0-9]*'>
+    <br>
+    <br>
+    <a id='check-in-submit' href='#'>Go</a>
+    <div class='modal-notice'></div>
+  </div>
+</div>
 
-<div id='check-out' class='red-button'>
-  <a href='#'>
-    Check-out
-  </a>
+<div id='check-out-modal' class="modal">
+  <div class="modal-content">
+    <span class="close">x</span>
+    <h3>Enter Pass Number</h3>
+    <br>
+    <input id='check-out-pass-id' type='text' pattern='[0-9]*'>
+    <br>
+    <br>
+    <a id='check-out-submit' href='#'>Go</a>
+    <div class='modal-notice'></div>
+  </div>
+</div>
+
+<div class='footer'>
+  There are <span id='member-total'><%= @total_members %></span> <%= 'member'.pluralize(@total_members) %> in the system.
+  <br>
+  <br>
 </div>

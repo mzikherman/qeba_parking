@@ -25,15 +25,20 @@ class VisitsController < ApplicationController
   # POST /visits
   # POST /visits.json
   def create
-    @visit = Visit.new(owner: @owner)
+    if @owner.nil?
+      respond_to do |format|
+        format.js { render json: { notice: { base: ['Pass Not Found'] } } }
+      end
 
-    respond_to do |format|
-      if @visit.save
-        format.html { redirect_to '/', notice: "Visit was successfully created for #{@owner}." }
-        format.json { render :show, status: :created, location: @visit }
-      else
-        format.html { render :new }
-        format.json { render json: @visit.errors, status: :unprocessable_entity }
+    else
+      @visit = Visit.new(owner: @owner)
+
+      respond_to do |format|
+        if @visit.save
+          format.js { render json: { notice: "#{@owner} successfully checked-in.", checked_in: true } }
+        else
+          format.js { render json: { notice: @visit.errors } }
+        end
       end
     end
   end
@@ -43,7 +48,7 @@ class VisitsController < ApplicationController
   def update
     if @owner.nil?
       respond_to do |format|
-        format.js { render json: { notice: 'Pass id not found' } }
+        format.js { render json: { notice: 'Pass Not Found' } }
       end
 
     else
