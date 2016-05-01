@@ -1,10 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
   # Flash stripper
   if window.location.search.match /flash/
     window.history.pushState('', '', window.location.origin);
+
+  scrollFix = ->
+    $(window).scrollLeft(0)
+  # Apple keyboard bs
+  $('input').on 'blur', ->
+    setTimeout scrollFix, 200
 
   onCheckOutClick = (e) ->
     e.preventDefault()
@@ -16,7 +19,6 @@ $ ->
 
   onCheckInSubmit = (e) ->
     e.preventDefault()
-    window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
     passId = $('#check-in-pass-id').val()
     if passId
       $.ajax
