@@ -4,6 +4,6 @@ class WelcomeController < ApplicationController
     @occupied_spots = Visit.occupied.count
     @total_members = Owner.count
     @notice = params[:flash]
-    @date_string = DateTime.now.strftime('%A, %b %d')
+    @date_string = Time.now.strftime('%A, %b %d')
   end
 end
