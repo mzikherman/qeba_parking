@@ -22,6 +22,14 @@ class VisitsController < ApplicationController
   def edit
   end
 
+  # PUT /visits/end_all
+  def end_all
+    end_all_open_visits = Visit.end_all_open_visits
+    respond_to do |format|
+      format.js { render json: { notice: "#{end_all_open_visits} visitors checked out" } }
+    end
+  end
+
   # POST /visits
   # POST /visits.json
   def create
@@ -60,7 +68,7 @@ class VisitsController < ApplicationController
           format.js { render json: { notice: 'No corresponding visit to check-out found' } }
         end
       else
-        @visit.update_attributes!(end_at: Time.now)
+        @visit.end!
         respond_to do |format|
           format.js { render json: { notice: "#{@owner} successfully checked-out.", checked_out: true } }
         end

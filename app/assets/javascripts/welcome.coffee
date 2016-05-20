@@ -17,13 +17,24 @@ $ ->
     e.preventDefault()
     $('#check-in-modal').show()
 
+  onEndAllClick = (e) ->
+    e.preventDefault()
+    $.ajax
+      type: 'PUT'
+      url: '/visits/end/all'
+      dataType: 'json'
+      success: (resp) =>
+        currentLocation = window.location.href
+        window.location = "#{currentLocation}?flash=#{resp.notice}"
+        return
+
   onCheckInSubmit = (e) ->
     e.preventDefault()
     passId = $('#check-in-pass-id').val()
     if passId
       $.ajax
         type: 'POST'
-        url: "/visits"
+        url: "/visits/"
         data: visit: owner_id: passId
         dataType: 'json'
         success: (resp) =>
@@ -59,4 +70,5 @@ $ ->
     $(e.currentTarget).parent().parent().hide()
   $('#check-in-submit').on 'click', onCheckInSubmit
   $('#check-out-submit').on 'click', onCheckOutSubmit
+  $('#end-all-link').on 'click', onEndAllClick
 

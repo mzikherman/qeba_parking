@@ -12,6 +12,15 @@ class Visit < ActiveRecord::Base
     self.start_at = Time.now if self.start_at.blank?
   end
 
+  # Mark all visits as ended (used for EOD/BOD)
+  def self.end_all_open_visits
+    Visit.occupied.each(&:end!).count
+  end
+
+  def end!
+    update_attributes!(end_at: Time.now)
+  end
+
   def validate_overlapping_visits
     existing_visits = Visit.occupied.where(owner: owner)
     existing_visits = existing_visits.where("id != ?", self.id) if self.persisted?

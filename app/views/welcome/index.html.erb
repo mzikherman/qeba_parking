@@ -1,6 +1,6 @@
 <p id="notice"><%= @notice || notice %></p>
 
-There is a total of <strong><span id='occupied-spots'><%= @occupied_spots %></span></strong> <%= 'spot'.pluralize(@occupied_spots) %> taken so far.
+<p id='available-spots-message' class=<%= within_capacity_threshhold? ? 'warning' : '' %>>There is a total of <strong><span id='occupied-spots'><%= @occupied_spots %></span></strong> <%= 'spot'.pluralize(@occupied_spots) %> out of <strong><span id='total-spots'><%= QebaParking.config[:available_spaces] %></span></strong> taken so far.</p>
 
 <br>
 <br>
@@ -49,7 +49,8 @@ There is a total of <strong><span id='occupied-spots'><%= @occupied_spots %></sp
 </div>
 
 <div class='footer'>
-  There are <span id='member-total'><%= @total_members %></span> <%= 'member'.pluralize(@total_members) %> in the system.
+  There are <span id='member-total'><%= @total_members %></span> <%= 'total member'.pluralize(@total_members) %> in the system.
   <br>
+  <a id='end-all-link' href='#'>Check everyone out</a>
   <br>
 </div>
