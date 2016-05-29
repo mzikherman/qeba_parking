@@ -22,6 +22,7 @@ class Visit < ActiveRecord::Base
   end
 
   def validate_overlapping_visits
+    return if end_at?
     existing_visits = Visit.occupied.where(owner: owner)
     existing_visits = existing_visits.where("id != ?", self.id) if self.persisted?
     current_time = Time.now
