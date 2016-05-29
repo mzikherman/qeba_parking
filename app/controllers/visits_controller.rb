@@ -1,6 +1,7 @@
 class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :destroy]
   before_action :set_owner, only: [:create, :update]
+  skip_before_action :verify_authenticity_token
 
   # GET /visits
   # GET /visits.json
