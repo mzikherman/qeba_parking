@@ -22,7 +22,7 @@ class VisitsController < ApplicationController
   def edit
   end
 
-  # PUT /visits/end_all
+  # PUT /visits/end/all
   def end_all
     end_all_open_visits = Visit.end_all_open_visits
     respond_to do |format|
