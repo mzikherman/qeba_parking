@@ -23,6 +23,9 @@ $ ->
       type: 'PUT'
       url: '/visits/end/all'
       dataType: 'json'
+      beforeSend: (xhr) =>
+        token = $("meta[name='csrf-token']").attr("content");
+        xhr.setRequestHeader("X-CSRF-Token", token);
       success: (resp) =>
         currentLocation = window.location.href
         window.location = "#{currentLocation}?flash=#{resp.notice}"
@@ -37,6 +40,9 @@ $ ->
         url: "/visits/"
         data: visit: owner_id: passId
         dataType: 'json'
+        beforeSend: (xhr) =>
+          token = $("meta[name='csrf-token']").attr("content");
+          xhr.setRequestHeader("X-CSRF-Token", token);
         success: (resp) =>
           if resp.checked_in
             currentLocation = window.location.href
@@ -54,6 +60,9 @@ $ ->
         url: "/visits/#{passId}"
         data: visit: owner_id: passId
         dataType: 'json'
+        beforeSend: (xhr) =>
+          token = $("meta[name='csrf-token']").attr("content");
+          xhr.setRequestHeader("X-CSRF-Token", token);
         success: (resp) =>
           if resp.checked_out
             currentLocation = window.location.href
@@ -71,4 +80,3 @@ $ ->
   $('#check-in-submit').on 'click', onCheckInSubmit
   $('#check-out-submit').on 'click', onCheckOutSubmit
   $('#end-all-link').on 'click', onEndAllClick
-
